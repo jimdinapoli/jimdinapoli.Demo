@@ -1,0 +1,25 @@
+﻿@page "/customerdetails/{CustomerId}"
+
+@if (Customer == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+<section class="customer-detail">
+    <h1 class="page-title">Details for @Customer.CustomerName</h1>
+
+    <div class="col-12 row">
+        <div class="col-10 row">
+            <div class="col-xs-12 col-sm-8">
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Customer Id</label>
+                    <div class="col-sm-8">
+                        <label type="text" class="form-control-plaintext">@Customer.CustomerEmail</label>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+</section>
+}

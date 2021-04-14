@@ -1,0 +1,84 @@
+﻿@page "/customeredit"
+@page "/customeredit/{CustomerId}"
+
+@using SkullJocks.BenAdmin.App.Shared
+
+@if (!Saved)
+{
+    <section class="customer-edit">
+        <h1 class="page-title">Details for @Customer.CustomerName</h1>
+        <EditForm Model="@Customer" OnValidSubmit="@HandleValidSubmit"
+                  OnInvalidSubmit="@HandleInvalidSubmit">
+            <DataAnnotationsValidator />
+            <ValidationSummary></ValidationSummary>
+
+            <div class="form-group row">
+                <label for="c" class="col-sm-3" hidden="hidden">Customer Id: </label>
+                <input id="customername" hidden="hidden" class="form-control col-sm-8" @bind-value="@Customer.CustomerId" />
+                <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Customer.CustomerId)" />
+            </div>
+            <br />
+
+            <div class="form-group row">
+                <label for="c" class="col-sm-3">Customer Name: </label>
+                <input id="customername" class="form-control col-sm-8" @bind-value="@Customer.CustomerName" />
+                <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Customer.CustomerName)" />
+            </div>
+
+            <div class="form-group row">
+                <label for="c" class="col-sm-3">Email: </label>
+                <input id="email" class="form-control col-sm-8" @bind-value="@Customer.CustomerEmail" />
+                <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Customer.CustomerEmail)" />
+            </div>
+
+            <div class="form-group row">
+                <label for="c" class="col-sm-3">Phone: </label>
+                <input id="phone" class="form-control col-sm-8" @bind-value="@Customer.CustomerPhone" />
+                <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Customer.CustomerPhone)" />
+            </div>
+
+            <div class="form-group row">
+                <label for="c" class="col-sm-3">Extension: </label>
+                <input id="extension" class="form-control col-sm-8" @bind-value="@Customer.CustomerPhoneExtension" />
+                <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Customer.CustomerPhoneExtension)" />
+            </div>
+
+            <div class="form-group row">
+                <label for="addressline1" class="col-sm-3">Address Line 1: </label>
+                <InputText id="addressline1" class="form-control col-sm-8" @bind-Value="@Customer.AddressLine1"></InputText>
+                <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Customer.AddressLine1)" />
+            </div>
+
+            <div class="form-group row">
+                <label for="addressline2" class="col-sm-3">Address Line 2: </label>
+                <InputText id="addressline2" class="form-control col-sm-8" @bind-Value="@Customer.AddressLine2"></InputText>
+                <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Customer.AddressLine2)" />
+            </div>
+
+            <div class="form-group row">
+                <label for="city" class="col-sm-3">City: </label>
+                <InputText id="city" class="form-control col-sm-8" @bind-Value="@Customer.City"></InputText>
+                <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Customer.City)" />
+            </div>
+
+            <div class="form-group row">
+                <label for="state" class="col-sm-3">State: </label>
+                <InputText id="state" class="form-control col-sm-8" @bind-Value="@Customer.State"></InputText>
+                <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Customer.State)" />
+            </div>
+
+            <div class="form-group row">
+                <label for="zip" class="col-sm-3">City: </label>
+                <InputText id="zip" class="form-control col-sm-8" @bind-Value="@Customer.ZipCode"></InputText>
+                <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Customer.ZipCode)" />
+            </div>
+
+            <button type="submit" class="btn btn-primary edit-btn">Save Customer</button>
+            <a class="btn btn-outline-primary" @onclick="@NavigateToOverview">Back to overview</a>
+        </EditForm>
+    </section>
+}
+else
+{
+    <div class="alert @StatusClass">@Message</div>
+}
