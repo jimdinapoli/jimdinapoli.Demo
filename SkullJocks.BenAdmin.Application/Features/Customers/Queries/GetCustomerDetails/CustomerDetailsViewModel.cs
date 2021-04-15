@@ -1,4 +1,5 @@
 ﻿using SkullJocks.BenAdmin.Domain.Entities.ContactDetails;
+using SkullJocks.BenAdmin.Domain.Entities.Customers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -19,6 +20,6 @@ namespace SkullJocks.BenAdmin.Application.Features.Customers.Queries.GetCustomer
         public string ZipCode { get; set; }
         public string Country { get; set; }
         public Guid CustomerTypeId { get; set; }
-        public CustomerTypeDto CustomerType{ get; set; }
+        public CustomerTypeDto CustomerTypeDto { get; set; } = new CustomerTypeDto();
     }
 }

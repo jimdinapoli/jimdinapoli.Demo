@@ -1078,8 +1078,8 @@ namespace SkullJocks.BenAdmin.App.Services.Base
         [Newtonsoft.Json.JsonProperty("customerTypeId", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.Guid CustomerTypeId { get; set; }
     
-        [Newtonsoft.Json.JsonProperty("customerType", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public CustomerTypeDto CustomerType { get; set; }
+        [Newtonsoft.Json.JsonProperty("customerTypeDto", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public CustomerTypeDto CustomerTypeDto { get; set; }
     
     
     }

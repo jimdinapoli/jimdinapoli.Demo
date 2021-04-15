@@ -15,6 +15,6 @@ namespace SkullJocks.BenAdmin.App.ViewModels
         public string State { get; set; }
         public string ZipCode { get; set; }
         public Guid CustomerTypeId { get; set; }
-        public CustomerTypeVm CutomerType { get; set; }
+        public CustomerTypeVm CutomerTypeVm { get; set; }
     }
 }

@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Components;
 using SkullJocks.BenAdmin.App.Contracts;
+using SkullJocks.BenAdmin.App.Services.Base;
 using SkullJocks.BenAdmin.App.ViewModels;
 using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SkullJocks.BenAdmin.App.Pages
@@ -11,73 +14,67 @@ namespace SkullJocks.BenAdmin.App.Pages
         [Inject]
         public ICustomerDataService CustomerDataService { get; set; }
 
+        [Inject]
+        public ICustomerTypeDataService CustomerTypeDataService { get; set; }
+
         [Parameter]
         public string CustomerId { get; set; }
 
         [Inject]
         public NavigationManager NavigationManager { get; set; }
 
-        public CustomerDetailVm Customer { get; set; } = new CustomerDetailVm();
+        public CustomerDetailVm CustomerDetailVm { get; set; } = new CustomerDetailVm();
+
+        public ObservableCollection<CustomerTypeVm> CustomerTypes{ get; set; }
+            = new ObservableCollection<CustomerTypeVm>();
+
+        private Guid SelectedCustomerId = Guid.Empty;
+        public string SelectedCustomerTypeId { get; set; }
 
         protected string Message = string.Empty;
-        protected string StatusClass = string.Empty;
-        protected bool Saved;
 
 
         protected override async Task OnInitializedAsync()
         {
-            Saved = false;
+            var list = await CustomerTypeDataService.GetAllCustomerTypes();
+            CustomerTypes = new ObservableCollection<CustomerTypeVm>(list);
+            SelectedCustomerTypeId = CustomerTypes.FirstOrDefault().CustomerTypeId.ToString();
 
-            var isExisting = Guid.TryParse(CustomerId, out _);
-
-            if (!isExisting) //new customer is being created
+            if (Guid.TryParse(CustomerId, out SelectedCustomerId))
             {
-                //add some defaults
-                Customer = new CustomerDetailVm
-                {
-                    CustomerId = Guid.Empty
-                };
-            }
-            else
-            {
-                Customer = await CustomerDataService.GetCustomerById(Guid.Parse(CustomerId));
+                CustomerDetailVm = await CustomerDataService.GetCustomerById(SelectedCustomerId);
+                SelectedCustomerTypeId = CustomerDetailVm.CustomerTypeId.ToString();
             }
         }
 
         protected async Task HandleValidSubmit()
         {
-            Saved = false;
+            CustomerDetailVm.CustomerTypeId = Guid.Parse(SelectedCustomerTypeId);
+            ApiResponse<Guid> response;
 
-            if (Customer.CustomerId == Guid.Empty)
+            if (SelectedCustomerId == Guid.Empty)
             {
-                var addedCustomer = await CustomerDataService.CreateCustomer(Customer);
-                if (addedCustomer != null)
-                {
-                    StatusClass = "alert-success";
-                    Message = "New customer added successfully.";
-                    Saved = true;
-                }
-                else
-                {
-                    StatusClass = "alert-danger";
-                    Message = "Something went wrong adding the new customer. Please try again.";
-                    Saved = false;
-                }
+                response = await CustomerDataService.CreateCustomer(CustomerDetailVm);
             }
             else
             {
-                await CustomerDataService.UpdateCustomer(Customer);
-                StatusClass = "alert-success";
-                Message = "Customer updated successfully.";
-                Saved = true;
-
+                response = await CustomerDataService.UpdateCustomer(CustomerDetailVm);
             }
+            HandleResponse(response);
         }
 
-        protected void HandleInvalidSubmit()
+        private void HandleResponse(ApiResponse<Guid> response)
         {
-            StatusClass = "alert-danger";
-            Message = "Error Please try again.";
+            if (response.Success)
+            {
+                NavigationManager.NavigateTo("/customeroverview");
+            }
+            else
+            {
+                Message = response.Message;
+                if (!string.IsNullOrEmpty(response.ValidationErrors))
+                    Message += response.ValidationErrors;
+            }
         }
 
         protected void NavigateToOverview()

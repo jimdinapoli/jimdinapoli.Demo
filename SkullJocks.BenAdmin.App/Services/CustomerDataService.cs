@@ -29,6 +29,7 @@ namespace SkullJocks.BenAdmin.App.Services
         {
             var selectedCustomer = await _client.GetCustomerByIdAsync(id);
             var mappedCustomer = _mapper.Map<CustomerDetailVm>(selectedCustomer);
+            //_mapper.Map(selectedCustomer.CustomerTypeDto, mappedCustomer.CutomerTypeVm);
             return mappedCustomer;
         }
 
