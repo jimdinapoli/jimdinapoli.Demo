@@ -8,6 +8,7 @@ namespace SkullJocks.BenAdmin.Application.Features.Customers.Commands.CreateCust
 {
     public class CreateCustomerCommand : IRequest<Guid>
     {
+        public Guid CustomerId { get; set; }
         public string CustomerName { get; set; }
         public string CustomerEmail { get; set; }
         public string CustomerPhone { get; set; }
@@ -18,6 +19,6 @@ namespace SkullJocks.BenAdmin.Application.Features.Customers.Commands.CreateCust
         public string State { get; set; }
         public string ZipCode { get; set; }
         public string Country { get; set; }
-        public ICollection<Contact> Contacts { get; set; }
+        public Guid CustomerTypeId { get; set; }
     }
 }
