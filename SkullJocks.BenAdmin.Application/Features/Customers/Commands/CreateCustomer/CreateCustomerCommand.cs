@@ -1,8 +1,5 @@
 ﻿using MediatR;
-using SkullJocks.BenAdmin.Domain.Entities.ContactDetails;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SkullJocks.BenAdmin.Application.Features.Customers.Commands.CreateCustomer
 {
