@@ -50,10 +50,11 @@ namespace SkullJocks.BenAdmin.App.Pages
         protected async Task HandleValidSubmit()
         {
             CustomerDetailVm.CustomerTypeId = Guid.Parse(SelectedCustomerTypeId);
-            ApiResponse<Guid> response;
 
+            ApiResponse<CustomerDetailVm> response;
             if (SelectedCustomerId == Guid.Empty)
             {
+                
                 response = await CustomerDataService.CreateCustomer(CustomerDetailVm);
             }
             else
@@ -63,7 +64,7 @@ namespace SkullJocks.BenAdmin.App.Pages
             HandleResponse(response);
         }
 
-        private void HandleResponse(ApiResponse<Guid> response)
+        private void HandleResponse(ApiResponse<CustomerDetailVm> response)
         {
             if (response.Success)
             {

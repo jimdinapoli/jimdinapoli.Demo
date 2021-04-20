@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SkullJocks.BenAdmin.Application.Features.Customers.Commands.UpdateCustomer
 {
-    public class UpdateCustomerCommand : IRequest
+    public class UpdateCustomerCommand : IRequest<UpdateCustomerCommandResponse>
     {
         public Guid CustomerId { get; set; }
         public string CustomerName { get; set; }

@@ -38,20 +38,17 @@ namespace SkullJocks.BenAdmin.Api.Controllers
         }
 
         [HttpPost(Name = "AddCustomer")]
-        public async Task<ActionResult<Guid>> Create([FromBody] CreateCustomerCommand createCustomerCommand)
+        public async Task<ActionResult<CreateCustomerCommandResponse>> Create([FromBody] CreateCustomerCommand createCustomerCommand)
         {
-            var id = await _mediator.Send(createCustomerCommand);
-            return Ok(id);
+            var response = await _mediator.Send(createCustomerCommand);
+            return Ok(response);
         }
 
         [HttpPut(Name = "UpdateCustomer")]
-        [ProducesResponseType(statusCode:204)]
-        [ProducesResponseType(statusCode:404)]
-        [ProducesDefaultResponseType]
-        public async Task<ActionResult> Update([FromBody] UpdateCustomerCommand updateCustomerCommand)
+        public async Task<ActionResult<UpdateCustomerCommandResponse>> Update([FromBody] UpdateCustomerCommand updateCustomerCommand)
         {
-            await _mediator.Send(updateCustomerCommand);
-            return NoContent();
+            var response = await _mediator.Send(updateCustomerCommand);
+            return Ok(response);
         }
     }
 }

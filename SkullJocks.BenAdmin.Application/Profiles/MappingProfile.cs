@@ -18,10 +18,13 @@ namespace SkullJocks.BenAdmnin.Application.Profiles
         {
             CreateMap<Customer, CustomerListModel>().ReverseMap();
             CreateMap<Customer, CustomerDetailsViewModel>().ReverseMap();
-            CreateMap<Customer, UpdateCustomerCommand>().ReverseMap();
+
             CreateMap<Customer, CreateCustomerTypeCommand>().ReverseMap();
             CreateMap<Customer, CreateCustomerViewModel>().ReverseMap();
             CreateMap<Customer, CreateCustomerCommand>().ReverseMap();
+
+            CreateMap<Customer, UpdateCustomerCommand>().ReverseMap();
+            CreateMap<Customer, UpdateCustomerCommandViewModel>().ReverseMap();
 
             CreateMap<CustomerType, CustomerTypeDto>().ReverseMap();
             CreateMap<CustomerType, CustomerTypeListViewModel>().ReverseMap();

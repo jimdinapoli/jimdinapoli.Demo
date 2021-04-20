@@ -11,7 +11,7 @@ namespace SkullJocks.BenAdmin.App.Contracts
     {
         Task<List<CustomerListVm>> GetAllCustomers();
         Task<CustomerDetailVm> GetCustomerById(Guid id);
-        Task<ApiResponse<Guid>> CreateCustomer(CustomerDetailVm customerDetailViewModel);
-        Task<ApiResponse<Guid>> UpdateCustomer(CustomerDetailVm customerDetailViewModel);
+        Task<ApiResponse<CustomerDetailVm>> CreateCustomer(CustomerDetailVm customerDetailViewModel);
+        Task<ApiResponse<CustomerDetailVm>> UpdateCustomer(CustomerDetailVm customerDetailViewModel);
     }
 }

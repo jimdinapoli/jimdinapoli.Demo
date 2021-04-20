@@ -55,6 +55,8 @@ namespace SkullJocks.BenAdmin.Api
 
             app.UseRouting();
 
+            app.UseExceptionHandler();
+
             app.UseAuthorization();
 
             app.UseCors("Open");

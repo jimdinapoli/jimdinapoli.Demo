@@ -29,37 +29,50 @@ namespace SkullJocks.BenAdmin.App.Services
         {
             var selectedCustomer = await _client.GetCustomerByIdAsync(id);
             var mappedCustomer = _mapper.Map<CustomerDetailVm>(selectedCustomer);
-            //_mapper.Map(selectedCustomer.CustomerTypeDto, mappedCustomer.CutomerTypeVm);
             return mappedCustomer;
         }
 
-        public async Task<ApiResponse<Guid>> CreateCustomer(CustomerDetailVm customerDetailViewModel)
+        public async Task<ApiResponse<CustomerDetailVm>> CreateCustomer(CustomerDetailVm customerDetailViewModel)
         {
             try
             {
+                ApiResponse<CustomerDetailVm> apiResponse = new ApiResponse<CustomerDetailVm>();
                 CreateCustomerCommand createCustomerCommand = _mapper.Map<CreateCustomerCommand>(customerDetailViewModel);
-                var newId = await _client.AddCustomerAsync(createCustomerCommand);
-                return new ApiResponse<Guid>() { Data = newId, Success = true };
+                var createCustomerCommandResponse = await _client.AddCustomerAsync(createCustomerCommand);
+                if (createCustomerCommandResponse.Success)
+                {
+                    apiResponse.Data = _mapper.Map<CustomerDetailVm>(createCustomerCommandResponse.Customer);
+                    apiResponse.Success = true;
+                }
+
+                return apiResponse;
             }
             catch (ApiException ex)
             {
-                return ConvertApiExceptions<Guid>(ex);
+                return ConvertApiExceptions<CustomerDetailVm>(ex);
             }
         }
 
-        public async Task<ApiResponse<Guid>> UpdateCustomer(CustomerDetailVm customerDetailViewModel)
+        public async Task<ApiResponse<CustomerDetailVm>> UpdateCustomer(CustomerDetailVm customerDetailViewModel)
         {
             try
             {
+                ApiResponse<CustomerDetailVm> apiResponse = new ApiResponse<CustomerDetailVm>();
                 UpdateCustomerCommand updateCustomerCommand = _mapper.Map<UpdateCustomerCommand>(customerDetailViewModel);
-                await _client.UpdateCustomerAsync(updateCustomerCommand);
-                return new ApiResponse<Guid>() { Success = true };
+                
+                var updateCustomerCommandResponse = await _client.UpdateCustomerAsync(updateCustomerCommand);
+                if (updateCustomerCommandResponse.Success)
+                {
+                    apiResponse.Data = _mapper.Map<CustomerDetailVm>(updateCustomerCommandResponse.Customer);
+                    apiResponse.Success = true;
+                }
+
+                return apiResponse;
             }
             catch (ApiException ex)
             {
-                return ConvertApiExceptions<Guid>(ex);
+                return ConvertApiExceptions<CustomerDetailVm>(ex);
             }
-
         }
     }
 }

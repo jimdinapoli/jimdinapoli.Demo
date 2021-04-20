@@ -46,36 +46,5 @@ namespace SkullJocks.BenAdmin.App.Pages
             CustomerTypes = new ObservableCollection<CustomerTypeVm>(list);
             SelectedCustomerTypeId = CustomerTypes.FirstOrDefault().CustomerTypeId.ToString();
         }
-
-        protected async Task HandleValidSubmit()
-        {
-            Customer.CustomerTypeId = Guid.Parse(SelectedCustomerTypeId);
-            ApiResponse<Guid> response;
-
-            if (SelectedCustomerId == Guid.Empty)
-            {
-                response = await CustomerDataService.CreateCustomer(Customer);
-            }
-            else
-            {
-                response = await CustomerDataService.UpdateCustomer(Customer);
-            }
-            HandleResponse(response);
-
-        }
-
-        private void HandleResponse(ApiResponse<Guid> response)
-        {
-            if (response.Success)
-            {
-                NavigationManager.NavigateTo("/customeroverview");
-            }
-            else
-            {
-                Message = response.Message;
-                if (!string.IsNullOrEmpty(response.ValidationErrors))
-                    Message += response.ValidationErrors;
-            }
-        }
     }
 }

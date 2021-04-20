@@ -3,7 +3,7 @@ using System;
 
 namespace SkullJocks.BenAdmin.Application.Features.Customers.Commands.CreateCustomer
 {
-    public class CreateCustomerCommand : IRequest<Guid>
+    public class CreateCustomerCommand : IRequest<CreateCustomerCommandResponse>
     {
         public Guid CustomerId { get; set; }
         public string CustomerName { get; set; }
